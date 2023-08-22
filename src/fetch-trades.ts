@@ -1,6 +1,7 @@
 import Web3 from 'web3'
 const TRICRYPTO_ABI = require('../abi/tricrypto-abi.json')
 const UNI_ABI = require('../abi/univ3-pool-abi.json')
+const COWSWAP_ABI = require('../abi/cowswap-abi.json')
 
 export type Trade = {
     block: number,
@@ -65,4 +66,30 @@ export async function fetchCurveTrades(
         tokens_bought: event.returnValues.tokens_bought
     }))
 
+}
+
+export async function fetchCowSwapTrades(
+    fromBlock: number,
+    toBlock: number,
+    contractAddress: string,
+    web3: Web3): Promise<Trade[]> {
+
+    let contract = new web3.eth.Contract(COWSWAP_ABI, contractAddress)
+    let result = await contract.getPastEvents('Trade', {
+        fromBlock: fromBlock,
+        toBlock: toBlock
+    })
+    
+    return result.map((event: any) => ({
+        block: event.blockNumber,
+        txHash: event.transactionHash,
+        txIndex: event.transactionIndex,
+        account: event.returnValues.buyer,
+        pool: contractAddress,
+        sold_asset: event.returnValues.sellToken,
+        bought_asset: event.returnValues.buyToken,
+        tokens_sold: event.returnValues.sellAmount,
+        tokens_bought: event.returnValues.buyAmount
+    }))
+    
 }
