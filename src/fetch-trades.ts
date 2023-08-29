@@ -79,12 +79,12 @@ export async function fetchCowSwapTrades(
         fromBlock: fromBlock,
         toBlock: toBlock
     })
-    
+
     return result.map((event: any) => ({
         block: event.blockNumber,
         txHash: event.transactionHash,
         txIndex: event.transactionIndex,
-        account: event.returnValues.buyer,
+        account: event.returnValues.owner,
         pool: contractAddress,
         sold_asset: event.returnValues.sellToken,
         bought_asset: event.returnValues.buyToken,
