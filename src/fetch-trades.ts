@@ -86,8 +86,8 @@ export async function fetchCowSwapTrades(
         txIndex: event.transactionIndex,
         account: event.returnValues.owner,
         pool: contractAddress,
-        sold_asset: event.returnValues.sellToken,
-        bought_asset: event.returnValues.buyToken,
+        sold_asset: event.returnValues.sellToken !== '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' ? event.returnValues.sellToken : '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+        bought_asset: event.returnValues.buyToken !== '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' ? event.returnValues.buyToken : '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
         tokens_sold: event.returnValues.sellAmount,
         tokens_bought: event.returnValues.buyAmount
     }))

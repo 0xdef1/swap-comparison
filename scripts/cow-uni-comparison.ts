@@ -18,13 +18,14 @@ const assetAddresses: any = {
 }
 import Web3 from 'web3'
 import { sleep } from '../src/sleep'
-const w3 = new Web3('https://eth-mainnet.g.alchemy.com/v2/d-zNwmGUjkCQpqag89kNbXdhpFRyU7Ln')
+// const w3 = new Web3('https://alpha-bold-mound.discover.quiknode.pro/fe9ff2822396afb244e6c32c7a91840506b41a3b/')
+const w3 = new Web3('https://eth.llamarpc.com')
 
 main()
 
 async function main() {
     let startBlock = 13916166
-    let endBlock = 15000000
+    let endBlock = 18000000
     let batchSize = 500
     let numBatches = Math.ceil((endBlock - startBlock) / batchSize)
     for (var batch = 0; batch < numBatches; batch++) {
@@ -42,7 +43,7 @@ async function runBatch(fromBlock: number, toBlock: number) {
     let trades = _([...cowTrades])
         .sortBy(['block','txIndex']).value()
 
-    await sleep(100);
+    // await sleep(100);
 
     const throttle = pThrottle({
         limit: 5,
