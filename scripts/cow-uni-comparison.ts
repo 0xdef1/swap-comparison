@@ -41,7 +41,9 @@ async function runBatch(fromBlock: number, toBlock: number) {
     let cowTrades = await fetchCowSwapTrades(fromBlock, toBlock, COWSWAP_ADDRESS, w3)
 
     let trades = _([...cowTrades])
-        .sortBy(['block','txIndex']).value()
+        .sortBy(['block','txIndex'])
+        .filter(t => t.bought_asset == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' || t.sold_asset == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
+        .value()
 
     // await sleep(100);
 
